@@ -213,7 +213,6 @@ def test_private_repo_without_token():
     )
     logger.info("Received response status code: %s", response.status_code)
     logger.info("Response content: %s", response.json())
-
     assert response.status_code == 404
     assert "detail" in response.json()
     assert "Not found" in response.json()["detail"]

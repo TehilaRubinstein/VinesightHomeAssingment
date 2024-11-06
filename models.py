@@ -13,7 +13,8 @@ class RepositoryRevisions(BaseModel):
                                          If not provided, requests will be unauthenticated.
     """
     repository: str
-    revisions: List[str] = Field(..., min_length=2, max_length=2)
+    revisions: List[str] = Field(..., min_items=2, max_items=2)
+    # Ensure exactly 2 items, without restricting character length.
     github_api_key: Optional[str] = None
 
 
