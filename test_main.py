@@ -218,3 +218,29 @@ def test_private_repo_without_token():
     assert "Not found" in response.json()["detail"]
 
 
+def test_revisions_multiple_repositories():
+    """Test case where non-existent revisions are provided for multiple repositories."""
+    logger.info("Running test_revisions_multiple_repositories")
+    response = client.post(
+        "/diff",
+        json=[
+            {
+                "repository": "fastapi/fastapi",
+                "revisions": [
+                    rev1,
+                    rev2
+                ]
+            },
+            {
+                "repository": "fastapi/fastapi",
+                "revisions": [
+                    rev1,
+                    rev2
+                ]
+            }
+        ]
+    )
+    logger.info("Received response: %s", response.json())
+    assert response.status_code == 200
+
+

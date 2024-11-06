@@ -53,6 +53,7 @@ first option - without token (public repository):
 ```
 
 second option - with token (private repository):
+(The token is invalid because of the upload to git, but I use it for thed tests)
 ```json
 [
    {
