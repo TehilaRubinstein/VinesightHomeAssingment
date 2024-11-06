@@ -215,8 +215,8 @@ def test_private_repo_without_token():
     logger.info("Response content: %s", response.json())
 
     # Expecting a 401 Unauthorized because private repositories require a token
-    assert response.status_code == 401
+    assert response.status_code == 404
     assert "detail" in response.json()
-    assert "Unauthorized" in response.json()["detail"]
+    assert "Not found" in response.json()["detail"]
 
 

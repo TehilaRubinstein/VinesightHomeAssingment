@@ -40,6 +40,7 @@ List of objects with repository and revisions_diff (unique commits in each revis
 ### Request Body Example
 
 The request body should include the following structure:
+
 first option - without token (public repository):
 
 ```json

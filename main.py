@@ -4,43 +4,14 @@ from typing import List
 from models import RepositoryRevisions, RevisionsDiff
 from github_service import get_commit_diff
 import asyncio
-import logging
-import logging.config
 
+from logging_setup import setup_logging
 
-def setup_logging(log_file: str = "app.log"):
-    logging_config = {
-        "version": 1,
-        "formatters": {
-            "default": {
-                "format": "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
-            },
-        },
-        "handlers": {
-            "file": {
-                "class": "logging.FileHandler",
-                "filename": log_file,
-                "formatter": "default",
-                "level": "DEBUG",
-            },
-            "console": {
-                "class": "logging.StreamHandler",
-                "formatter": "default",
-                "level": "DEBUG",
-            },
-        },
-        "root": {
-            "level": "DEBUG",
-            "handlers": ["file", "console"],
-        },
-    }
-    logging.config.dictConfig(logging_config)
-    return logging.getLogger()
+# Initialize the logger
+logger = setup_logging()
 
 app = FastAPI()
 
-# Initialize logger
-logger = setup_logging()
 
 @app.post("/diff", response_model=List[RevisionsDiff])
 async def get_revisions_diff(repos: List[RepositoryRevisions]):
@@ -80,9 +51,6 @@ async def get_revisions_diff(repos: List[RepositoryRevisions]):
         if e.response.status_code == 404:
             logger.error(f"Not found: {e.request.url}")
             raise HTTPException(status_code=404, detail="Not found.")
-        elif e.response.status_code == 401:
-            logger.error(f"Unauthorized: {e.request.url}")
-            raise HTTPException(status_code=401, detail="Unauthorized access.")
         else:
             logger.error("HTTP error while fetching commits: %s", e)
             raise HTTPException(status_code=400, detail=f"Error fetching commits: {str(e)}")
