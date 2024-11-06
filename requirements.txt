@@ -1,0 +1,5 @@
+fastapi==0.88.0
+httpx==0.24.0
+pydantic==1.10.0
+pytest==7.3.0
+pytest-asyncio==0.20.3
