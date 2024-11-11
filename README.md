@@ -34,6 +34,7 @@ Request Body:
 * repository: Repository name (e.g., owner/repo).
 * revisions: List of two revisions (e.g., ["main", "dev"]).
 * github_api_key (optional): GitHub access token.
+
 Response:
 List of objects with repository and revisions_diff (unique commits in each revision).
 
